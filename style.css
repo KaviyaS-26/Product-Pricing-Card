@@ -1,0 +1,487 @@
+/* ==========================================================================
+   Design Tokens & Variables
+   ========================================================================== */
+:root {
+  /* Slate & Neutral Palette (All ratios >= 4.5:1 against respective backgrounds) */
+  --color-bg-page: #f8fafc;
+  --color-bg-card: #ffffff;
+  --color-text-primary: #0f172a;       /* Slate 900: High-contrast primary text */
+  --color-text-secondary: #475569;     /* Slate 600: Contrast ratio ~5.8:1 on white */
+  --color-border-card: #e2e8f0;        /* Slate 200 */
+  --color-border-card-hover: #cbd5e1;  /* Slate 300 */
+  --color-toggle-track: #e2e8f0;       /* Slate 200 track */
+
+  /* Indigo Accent Palette */
+  --color-primary: #4f46e5;            /* Indigo 600: Contrast ratio 7.2:1 with white */
+  --color-primary-hover: #4338ca;      /* Indigo 700 */
+  --color-primary-light: #eef2ff;      /* Indigo 50 */
+  --color-popular-border: #6366f1;     /* Indigo 500 */
+
+  /* Success / Best Value Palette */
+  --color-emerald-dark: #047857;       /* Emerald 700: Contrast ratio 5.0:1 with white */
+  --color-emerald-light: #dcfce7;      /* Emerald 100 */
+  --color-emerald-text: #15803d;       /* Emerald 700 on emerald 100: 4.7:1 */
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-card: 0 4px 6px -1px rgba(15, 23, 42, 0.06), 0 2px 4px -2px rgba(15, 23, 42, 0.04);
+  --shadow-card-hover: 0 20px 25px -5px rgba(15, 23, 42, 0.12), 0 8px 10px -6px rgba(15, 23, 42, 0.06);
+  --shadow-popular: 0 12px 25px -4px rgba(79, 70, 229, 0.16), 0 4px 6px -2px rgba(79, 70, 229, 0.08);
+  --shadow-popular-hover: 0 25px 35px -5px rgba(79, 70, 229, 0.25), 0 10px 15px -5px rgba(79, 70, 229, 0.15);
+
+  /* Typography & Transitions */
+  --font-stack: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --transition-smooth: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+/* ==========================================================================
+   CSS Reset & Base Setup
+   ========================================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-stack);
+  background-color: var(--color-bg-page);
+  background-image: 
+    radial-gradient(at 50% 0%, #e0e7ff 0px, transparent 65%),
+    radial-gradient(at 100% 100%, #ede9fe 0px, transparent 50%);
+  background-attachment: fixed;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+/* ==========================================================================
+   Section & Header Styling
+   ========================================================================== */
+.page-container {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.pricing-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 0;
+}
+
+.section-header {
+  text-align: center;
+  max-width: 680px;
+  margin-bottom: 3.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  background-color: var(--color-primary-light);
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  margin-bottom: 1rem;
+}
+
+.section-header h2 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--color-text-primary);
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  margin-bottom: 0.875rem;
+}
+
+.subtitle {
+  font-size: 1.125rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+/* ==========================================================================
+   Toggle Button Group
+   ========================================================================== */
+.toggle-wrapper {
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--color-toggle-track);
+  padding: 0.3125rem;
+  border-radius: 9999px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+  position: relative;
+}
+
+.toggle-btn {
+  appearance: none;
+  border: none;
+  background: transparent;
+  padding: 0.625rem 1.5rem;
+  border-radius: 9999px;
+  font-family: inherit;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.toggle-btn:hover:not(.active) {
+  color: var(--color-text-primary);
+}
+
+.toggle-btn.active {
+  background-color: var(--color-primary);
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(79, 70, 229, 0.35);
+}
+
+.discount-pill {
+  font-size: 0.75rem;
+  font-weight: 700;
+  background-color: var(--color-emerald-light);
+  color: var(--color-emerald-text);
+  padding: 0.15rem 0.5rem;
+  border-radius: 9999px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.toggle-btn.active .discount-pill {
+  background-color: #ffffff;
+  color: var(--color-primary);
+}
+
+/* Focus Visible for All Buttons */
+button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.25);
+}
+
+/* ==========================================================================
+   Pricing Cards Grid
+   ========================================================================== */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  width: 100%;
+  align-items: center; /* Popular card stands taller */
+}
+
+/* ==========================================================================
+   Card Structure & Styling
+   ========================================================================== */
+.card {
+  position: relative;
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border-card);
+  border-radius: 1.25rem;
+  padding: 2.5rem 2rem;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Clips the corner ribbons cleanly */
+  transition: var(--transition-smooth);
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-card-hover);
+  border-color: var(--color-border-card-hover);
+}
+
+/* Popular Card (Prominent, Larger, Colored Border) */
+.card.popular {
+  border: 2px solid var(--color-popular-border);
+  padding: 3.25rem 2.25rem;
+  box-shadow: var(--shadow-popular);
+  transform: scale(1.04);
+  z-index: 2;
+}
+
+.card.popular:hover {
+  transform: scale(1.04) translateY(-6px);
+  box-shadow: var(--shadow-popular-hover);
+}
+
+/* Corner Ribbons (Popular & Best Value) */
+.ribbon {
+  position: absolute;
+  top: 22px;
+  right: -34px;
+  transform: rotate(45deg);
+  width: 140px;
+  padding: 0.375rem 0;
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  pointer-events: none;
+  z-index: 5;
+}
+
+.ribbon-popular {
+  background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+}
+
+.ribbon-best-value {
+  background: linear-gradient(135deg, var(--color-emerald-dark) 0%, #10b981 100%);
+}
+
+/* Card Header */
+.card-header {
+  margin-bottom: 1.5rem;
+}
+
+.plan-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.plan-description {
+  font-size: 0.9375rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  min-height: 2.8rem;
+}
+
+/* Price Container */
+.price-container {
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+  padding-bottom: 1.75rem;
+  margin-bottom: 1.75rem;
+  border-bottom: 1px solid var(--color-border-card);
+}
+
+.currency {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.price {
+  font-size: 3.25rem;
+  font-weight: 800;
+  color: var(--color-text-primary);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.unit {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  margin-left: 0.25rem;
+}
+
+/* Feature List */
+.features-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2.25rem;
+  flex-grow: 1;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.9375rem;
+  color: #1e293b; /* High contrast text */
+  line-height: 1.4;
+}
+
+.check-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+  color: var(--color-primary);
+}
+
+.card.popular .check-icon {
+  color: var(--color-primary);
+}
+
+/* Call-to-Action Buttons */
+.cta-btn {
+  appearance: none;
+  width: 100%;
+  padding: 0.875rem 1.5rem;
+  border-radius: 0.75rem;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  border: 1.5px solid #cbd5e1;
+  background-color: #ffffff;
+  color: var(--color-text-primary);
+  transition: all 0.2s ease;
+}
+
+.cta-btn:hover {
+  background-color: var(--color-text-primary);
+  color: #ffffff;
+  border-color: var(--color-text-primary);
+}
+
+/* Popular CTA Button (High-Contrast Primary Accent) */
+.cta-btn.cta-popular {
+  background-color: var(--color-primary);
+  color: #ffffff;
+  border: 1.5px solid var(--color-primary);
+  box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
+}
+
+.cta-btn.cta-popular:hover {
+  background-color: var(--color-primary-hover);
+  border-color: var(--color-primary-hover);
+  box-shadow: 0 6px 14px rgba(79, 70, 229, 0.4);
+}
+
+/* ==========================================================================
+   Responsive Breakpoints
+   - Below 800px: Stack cards in single column with Popular plan first
+   - Supports 1280px (desktop), 768px (tablet), 360px (mobile)
+   ========================================================================== */
+@media (max-width: 800px) {
+  .pricing-grid {
+    grid-template-columns: 1fr;
+    max-width: 480px;
+    margin: 0 auto;
+    gap: 2.25rem;
+  }
+
+  /* Popular card appears first on stacked mobile/tablet view */
+  .card.popular {
+    order: 1;
+    transform: none; /* Reset desktop scale to fit cleanly on narrow screens */
+    padding: 3rem 2rem;
+  }
+
+  .card.starter {
+    order: 2;
+  }
+
+  .card.team {
+    order: 3;
+  }
+
+  /* Single-column hover behavior for popular card */
+  .card.popular:hover {
+    transform: translateY(-6px);
+  }
+
+  .section-header h2 {
+    font-size: 2.125rem;
+  }
+}
+
+/* Mobile Screen Tuning (360px support) */
+@media (max-width: 480px) {
+  body {
+    padding: 1.5rem 0.75rem;
+  }
+
+  .pricing-section {
+    padding: 1rem 0;
+  }
+
+  .section-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .section-header h2 {
+    font-size: 1.75rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .toggle-btn {
+    padding: 0.5rem 0.875rem;
+    font-size: 0.875rem;
+  }
+
+  .card {
+    padding: 2rem 1.25rem;
+  }
+
+  .card.popular {
+    padding: 2.5rem 1.25rem;
+  }
+
+  .price {
+    font-size: 2.75rem;
+  }
+
+  .currency {
+    font-size: 1.5rem;
+  }
+
+  .plan-description {
+    min-height: auto;
+  }
+}
+
+/* ==========================================================================
+   Accessibility: Prefers-Reduced-Motion
+   Turns off transitions and movement for users requesting reduced motion
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .card,
+  .card:hover,
+  .card.popular,
+  .card.popular:hover,
+  .cta-btn,
+  .cta-btn:hover,
+  .toggle-btn {
+    transition: none !important;
+    transform: none !important;
+  }
+}
